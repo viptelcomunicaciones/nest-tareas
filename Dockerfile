@@ -7,7 +7,7 @@ RUN apt-get update -y && apt-get install -y openssl && rm -rf /var/lib/apt/lists
 WORKDIR /app
 
 # Habilitar pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN corepack enable && corepack prepare pnpm@10.31.0 --activate
 
 # Dependencias reproducibles y con caché
 COPY package.json pnpm-lock.yaml ./
