@@ -1,9 +1,4 @@
-import {
-  IsString,
-  IsOptional,
-  IsEnum,
-  MinLength,
-} from 'class-validator';
+import { IsString, IsOptional, IsEnum, MinLength } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { EstadoTarea, Prioridad } from '../../generated/prisma/enums';
 

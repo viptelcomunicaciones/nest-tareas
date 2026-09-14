@@ -35,10 +35,7 @@ export class TasksController {
   @Post()
   @ApiOperation({ summary: 'Create a new task' })
   @ApiResponse({ status: 201, description: 'Task created successfully' })
-  async create(
-    @Body() createTaskDto: CreateTaskDto,
-    @CurrentUser() user: any,
-  ) {
+  async create(@Body() createTaskDto: CreateTaskDto, @CurrentUser() user: any) {
     return this.tasksService.create(createTaskDto, user.id);
   }
 
@@ -62,7 +59,10 @@ export class TasksController {
   @ApiOperation({ summary: 'Get task by ID' })
   @ApiResponse({ status: 200, description: 'Task found' })
   @ApiResponse({ status: 404, description: 'Task not found' })
-  async findOne(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: any) {
+  async findOne(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: any,
+  ) {
     return this.tasksService.findOne(id, user.id, user.rol);
   }
 
@@ -83,7 +83,10 @@ export class TasksController {
   @ApiOperation({ summary: 'Delete task' })
   @ApiResponse({ status: 200, description: 'Task deleted' })
   @ApiResponse({ status: 404, description: 'Task not found' })
-  async remove(@Param('id', ParseIntPipe) id: number, @CurrentUser() user: any) {
+  async remove(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: any,
+  ) {
     return this.tasksService.remove(id, user.id, user.rol);
   }
 }

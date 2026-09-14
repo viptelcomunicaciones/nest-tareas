@@ -78,9 +78,7 @@ export class TasksService {
     }
 
     if (rol !== 'ADMIN' && tarea.usuarioId !== usuarioId) {
-      throw new ForbiddenException(
-        'Solo puedes ver tus propias tareas',
-      );
+      throw new ForbiddenException('Solo puedes ver tus propias tareas');
     }
 
     return tarea;
@@ -101,9 +99,7 @@ export class TasksService {
     }
 
     if (rol !== 'ADMIN' && tarea.usuarioId !== usuarioId) {
-      throw new ForbiddenException(
-        'Solo puedes actualizar tus propias tareas',
-      );
+      throw new ForbiddenException('Solo puedes actualizar tus propias tareas');
     }
 
     return this.prisma.tarea.update({
@@ -131,9 +127,7 @@ export class TasksService {
     }
 
     if (rol !== 'ADMIN' && tarea.usuarioId !== usuarioId) {
-      throw new ForbiddenException(
-        'Solo puedes eliminar tus propias tareas',
-      );
+      throw new ForbiddenException('Solo puedes eliminar tus propias tareas');
     }
 
     await this.prisma.tarea.delete({

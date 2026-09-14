@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { PrismaService } from '../prisma/prisma.service';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserDto, UpdateRoleDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -44,9 +44,7 @@ export class UsersService {
 
   async update(id: number, updateUserDto: UpdateUserDto, currentUser: any) {
     if (currentUser.rol !== 'ADMIN' && currentUser.id !== id) {
-      throw new ForbiddenException(
-        'Solo puedes actualizar tu propio perfil',
-      );
+      throw new ForbiddenException('Solo puedes actualizar tu propio perfil');
     }
 
     await this.findOne(id);
@@ -71,9 +69,7 @@ export class UsersService {
     currentUser: any,
   ) {
     if (currentUser.id !== id) {
-      throw new ForbiddenException(
-        'Solo puedes cambiar tu propia contraseña',
-      );
+      throw new ForbiddenException('Solo puedes cambiar tu propia contraseña');
     }
 
     const usuario = await this.prisma.usuario.findUnique({
@@ -101,6 +97,22 @@ export class UsersService {
     });
 
     return { message: 'Contraseña actualizada exitosamente' };
+  }
+
+  async updateRole(id: number, updateRoleDto: UpdateRoleDto) {
+    await this.findOne(id);
+
+    return this.prisma.usuario.update({
+      where: { id },
+      data: { rol: updateRoleDto.rol },
+      select: {
+        id: true,
+        email: true,
+        nombre: true,
+        rol: true,
+        creadoEn: true,
+      },
+    });
   }
 
   async remove(id: number) {
